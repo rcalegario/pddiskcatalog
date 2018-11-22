@@ -13,8 +13,9 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
+            <Route exact path={'/'} component={DiskList}/>
             <Route exact path={'/disks'} component={DiskList}/>
-            <Route path={'/disks/add'} component={DiskAdd}/>
+            <Route exact path={'/disks/add'} component={DiskAdd}/>
             <Route path={'/disks/:id/:edit'} component={DiskAdd}/>
             <Route path={'/disks/:id'} component={Disk}/>
           </Switch>

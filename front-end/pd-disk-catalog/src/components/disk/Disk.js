@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
+import { findDisk } from '../../store/actions/diskActions';
 
 class Disk extends Component {
+  
+  componentWillMount = () => {
+    const { id } = this.props.match.params;
+    this.props.findDisk(Number(id));
+  }
+  
   render() {
     const { disk } = this.props;
 
@@ -34,4 +43,14 @@ class Disk extends Component {
   }
 }
 
-export default Disk;
+const mapStateToProps = (state) => {
+  return { disk: state.disk };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    findDisk: (id) => dispatch(findDisk(id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Disk);

@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import InputField from '../common/InputField';
+import { addDisk } from '../../store/actions/diskActions';
 
 class DiskAdd extends Component {
   state = {
@@ -12,9 +14,10 @@ class DiskAdd extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handle submit add thing', this.state);
+    this.props.addDisk(this.state);
+    this.props.history.push('/disks')
   }
-
+  
   hadleFieldChage = (e) => {
     let { id, value } = e;
     this.setState({ [id]: value });
@@ -38,4 +41,12 @@ class DiskAdd extends Component {
   }
 }
 
-export default DiskAdd;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addDisk: (disk) => {
+      return dispatch(addDisk(disk))
+    },
+  }
+}
+
+export default connect(null, mapDispatchToProps)(DiskAdd);

@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import DiskSummary from './DiskSummary';
 
 class DiskList extends Component {
   render() {
     const { disks } = this.props;
+    console.log('disks', disks);
     if (disks) {
       return (
         <div className="disk-list container">
@@ -30,4 +32,11 @@ class DiskList extends Component {
   }
 }
 
-export default DiskList;
+const mapStateToProps = (state) => {
+  console.log('state', state);
+  return {
+    disks: state.disks
+  }
+}
+
+export default connect(mapStateToProps)(DiskList);
