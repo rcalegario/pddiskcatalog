@@ -14,6 +14,12 @@ const diskRouter = Router();
  *       - Bearer: []
  *     tags:
  *       - Disk
+ *     parameters:
+ *       - in: query
+ *         name: filters
+ *         schema:
+ *           type: string
+ *         description: Filters for search
  *     responses:
  *       200:
  *         description: List of all disk
@@ -22,7 +28,7 @@ const diskRouter = Router();
  *       404:
  *         description: Not Found
  */
-diskRouter.get('/', diskController.getAllDisk);
+diskRouter.get('/', diskController.search);
 
 /**
  * @swagger
@@ -124,5 +130,24 @@ diskRouter.put('/:id', diskController.updateDisk);
  *         description: Not Found
  */
 diskRouter.delete('/:id', diskController.deleteDisk);
+
+/**
+ * @swagger
+ *
+ * definitions:
+ *   Disk:
+ *     type: object
+ *     required:
+ *       - title
+ *       - artist
+ *       - year
+ *     properties:
+ *       title:
+ *         type: string
+ *       artist:
+ *         type: string
+ *       year:
+ *         type: number
+ */
 
 module.exports = diskRouter;

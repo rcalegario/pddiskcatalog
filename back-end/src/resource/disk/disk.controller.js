@@ -1,8 +1,9 @@
 const diskService = require('./disk.service');
 
-exports.getAllDisk = async (req, res, next) => {
+exports.search = async (req, res, next) => {
   try {
-    const disks = await diskService.getAll()
+    const { filters } = req.query;
+    const disks = await diskService.search(filters)
     res.json({ msg: 'all disk on db', data: disks});
   } catch (e) {
     next(e);

@@ -3,9 +3,23 @@ const { DISK_NOT_FOUND } = require("./disk.constants");
 const { handlerNotFound, handlerThrow } = require("../../common/exception/service.error");
 const AppError = require('../../common/exception/app.error');
 
-exports.getAll = async () => {
+const filtersParser = (filters) => {
+  const parsedFilters = [];
+  filters.forEach(filter => {
+    const [key, value] = filter.split('|');
+    parsedFilters.push({ key, value });
+  });
+  return parsedFilters;
+}
+
+exports.search = async (filters) => {
   try {
-    return await repository.findAll();
+    let parsedFilters;
+    if (filters) {
+      filters = Array.isArray(filters) ? filters : [filters];
+      parsedFilters = filters && filtersParser(filters);
+    }
+    return await repository.find(parsedFilters);
   } catch (e) {
     throw new AppError(...handlerThrow(e));
   }
