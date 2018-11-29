@@ -6,11 +6,12 @@ const InitSwagger = require('./config/swagger');
 const ConfigApiRoutes = require('./config/routes');
 const ConfigErrorHandler = require('./common/exception/handler.error');
 
-if (process.env.NODE_ENV === "dev") require("dotenv").config({ path: '../.env-dev' });
+if (process.env.NODE_ENV === "dev") require("dotenv").config({ path: '.env-dev' });
 
 const app = express();
-app.use(bodyParser.json({ limit: "50mb", type: "application/vnd.api+json" }));
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 configLogger(app);
 InitServer(app);
 InitSwagger(app);
