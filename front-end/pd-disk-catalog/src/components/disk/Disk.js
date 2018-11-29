@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { findDisk } from '../../store/actions/diskActions';
+import { findDisk, deleteDisk } from '../../store/actions/diskActions';
 
 class Disk extends Component {
   
   componentWillMount = () => {
     const { id } = this.props.match.params;
     this.props.findDisk(Number(id));
+  }
+
+  handleDelete = () => {
+    this.props.deleteDisk(Number(this.props.disk.id));
   }
   
   render() {
@@ -28,7 +32,7 @@ class Disk extends Component {
           </div>
           <div className="right">
             <button className="btn green lighten-1 z-depth-0">Edit</button>
-            <button className="btn red lighten-1 z-depth-0">Delete</button>
+            <button className="btn red lighten-1 z-depth-0" onClick={this.handleDelete}>Delete</button>
           </div>
         </div>
       )
@@ -47,9 +51,10 @@ const mapStateToProps = (state) => {
   return { disk: state.disk };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     findDisk: (id) => dispatch(findDisk(id)),
+    deleteDisk: (id) => dispatch(deleteDisk(id, ownProps))
   }
 }
 

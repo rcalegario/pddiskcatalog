@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import DiskSummary from './DiskSummary';
+import { findAll } from '../../store/actions/diskActions';
 
 class DiskList extends Component {
+  
+  componentWillMount() {
+    this.props.findAll();
+  }
+  
   render() {
     const { disks } = this.props;
-    console.log('disks', disks);
+    console.log('DiskList render', disks);
     if (disks) {
       return (
         <div className="disk-list container">
@@ -33,10 +39,17 @@ class DiskList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state);
   return {
     disks: state.disks
   }
 }
 
-export default connect(mapStateToProps)(DiskList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    findAll: () => {
+      return dispatch(findAll())
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiskList);
