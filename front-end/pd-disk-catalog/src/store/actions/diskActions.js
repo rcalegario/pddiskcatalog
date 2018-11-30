@@ -20,7 +20,6 @@ export const findAll = () => {
   return (dispatch) => {
     axios.get(BASE_URL)
     .then((res) => {
-      console.log('FIND_ALL_DISKS res', res.data.data);
       dispatch({ type: 'FIND_ALL_DISKS', disks: res.data.data });
     }).catch((err) => {
       console.log('err', err);
@@ -46,7 +45,6 @@ export const deleteDisk = (id, ownProps) => {
   return (dispatch) => {
     axios.delete(`${BASE_URL}/${id}`)
     .then(() => {
-      console.log('DELETE_DISK res');
       dispatch({ type: 'DELETE_DISK', disk: null });
       ownProps.history.push('/disks');
     }).catch((err) => {
@@ -56,3 +54,26 @@ export const deleteDisk = (id, ownProps) => {
   }
 };
 
+const queryParamsBuilder = (filters) => {
+  let queryParams = '?'
+  Object.keys(filters).forEach(key => {
+    if (filters[key]) {
+      queryParams += `filters=${key}|${filters[key]}&`
+    }
+  });
+  return queryParams !== '?' ? queryParams : '';
+}
+
+export const search = (filters) => {
+  return (dispatch) => {
+    const url = BASE_URL+queryParamsBuilder(filters);
+    console.log('url', url);
+    axios.get(url)
+    .then((res) => {
+      dispatch({ type: 'FIND_ALL_DISKS', disks: res.data.data });
+    }).catch((err) => {
+      console.log('err', err);
+      dispatch({ type: 'ERROR' });
+    })
+  }
+};

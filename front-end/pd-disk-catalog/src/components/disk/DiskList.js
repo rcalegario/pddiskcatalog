@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import DiskSummary from './DiskSummary';
+import DiskSearch from './DiskSearch';
 import { findAll } from '../../store/actions/diskActions';
 
 class DiskList extends Component {
@@ -16,6 +17,7 @@ class DiskList extends Component {
     if (disks) {
       return (
         <div className="disk-list container">
+          <DiskSearch />
           <div className="row">
             <div className="col s10 offset-s1">
               <div className="disk-list section">

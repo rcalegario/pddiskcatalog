@@ -1,5 +1,10 @@
 const initState = {
-  disks: []
+  disks: [],
+  filters: {
+    title: null,
+    artist: null,
+    year: null
+  }
 }
 
 const diskReducer = (state = initState, action) => {
